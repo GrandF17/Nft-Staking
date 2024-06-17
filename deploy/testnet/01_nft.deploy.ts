@@ -7,8 +7,7 @@ const deployContract: DeployFunction = async ({
 }) => {
   const { deploy } = deployments;
   const [deployer] = await ethers.getSigners();
-
-  await deploy("PAC", {
+  await deploy("NukaCoin", {
     from: deployer.address,
     args: [ethers.utils.parseEther("500000000")],
     log: true,
@@ -16,3 +15,4 @@ const deployContract: DeployFunction = async ({
 };
 
 export default deployContract;
+deployContract.tags = ["nft deploy"];

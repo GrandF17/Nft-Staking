@@ -34,7 +34,7 @@
     "ether": "^0.0.9",
     "ethereum-waffle": "^3.4.4",
     "ethers": "^5.5.3",
-    "hardhat": "^2.8.3",
+    "hardhat": "^2.22.5",
     "hardhat-deploy-tenderly": "^0.2.0",
     "hardhat-gas-reporter": "^1.0.7",
     "js-yaml": "^4.1.0",
@@ -45,13 +45,13 @@
     "solidity-coverage": "^0.7.21",
     "ts-node": "^10.4.0",
     "typechain": "^5.2.0",
-    "typescript": "^4.6.4"
+    "typescript": "^5.4.5"
   },
   "dependencies": {
     "@nomicfoundation/hardhat-network-helpers": "^1.0.9",
-    "@openzeppelin/contracts": "^4.4.2",
+    "@openzeppelin/contracts": "^5.0.2",
     "@openzeppelin/contracts-upgradeable": "^4.7.1",
-    "hardhat-contract-sizer": "^2.4.0",
+    "hardhat-contract-sizer": "^2.10.0",
     "hardhat-deploy": "^0.10.0"
   }
 }

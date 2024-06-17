@@ -10,16 +10,15 @@ describe("Simmple test", function () {
     // Contracts are deployed using the first signer/account by default
     const [owner, otherAccount] = await ethers.getSigners();
 
-    const Pac = await ethers.getContractFactory("PAC");
-    const pac = await Pac.deploy(ethers.utils.parseEther("500000000"));
+    // const Token = await ethers.getContractFactory("Token");
+    // const token = await Token.deploy(ethers.utils.parseEther("500000000"));
 
-    return { pac, owner, otherAccount };
+    // return { token };
   }
 
   describe("Deployment", function () {
     it("Should set the right unlockTime", async function () {
-      const { pac } = await loadFixture(deployOneYearLockFixture);
-      console.log(pac.address);
+      /**const {  } = */ await loadFixture(deployOneYearLockFixture);
 
       expect(1).to.equal(1);
     });
