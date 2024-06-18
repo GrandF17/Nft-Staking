@@ -48,7 +48,7 @@ contract NftStaking is Ownable {
             "You've already staked your nft!"
         );
 
-        nomadNft.safeTransferFrom(msg.sender, address(this), id);
+        nomadNft.transferFrom(msg.sender, address(this), id);
         info[msg.sender] = User(block.timestamp, id);
     }
 

@@ -1,8 +1,10 @@
-import { HardhatUserConfig, task } from "hardhat/config";
+import { task } from "hardhat/config";
 import "@nomiclabs/hardhat-waffle";
 import "@typechain/hardhat";
 import "hardhat-deploy";
+import 'hardhat-gas-reporter'
 import * as dotenv from "dotenv";
+import { HardhatUserConfig } from "hardhat/types/config";
 dotenv.config();
 
 task("accounts", "Prints the list of accounts", async (taskArgs, hre) => {
@@ -13,13 +15,38 @@ task("accounts", "Prints the list of accounts", async (taskArgs, hre) => {
 });
 
 const config: HardhatUserConfig = {
-  solidity: "0.8.21",
+  solidity: {
+    compilers: [
+      {
+        version: "0.8.21",
+        settings: {
+          optimizer: {
+            enabled: true,
+            runs: 200,
+          },
+          metadata: {
+            // do not include the metadata hash, since this is machine dependent
+            // and we want all generated code to be deterministic
+            // https://docs.soliditylang.org/en/v0.7.6/metadata.html
+            // bytecodeHash: "none",
+          },
+        },
+      }]
+  },
+  gasReporter: {
+    enabled: (process.env.REPORT_GAS) ? true : false,
+    currency: 'USD',
+    coinmarketcap: process.env.CMC_API_KEY,
+    token: 'ETH',
+    gasPriceApi: "https://api.arbiscan.io/api?module=proxy&action=eth_gasPrice",
+    L2: "arbitrum"
+  },
   networks: {
     hardhat: {
       tags: ["fork"],
       deploy: ["deploy/fork/"],
       forking: {
-        url: "https://rpc.ankr.com/bsc",
+        url: "https://rpc.ankr.com/arbitrum",
       },
     },
     bsc_mainnet: {

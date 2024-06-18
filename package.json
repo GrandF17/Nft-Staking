@@ -5,7 +5,7 @@
     "compile": "hardhat compile",
     "deploy": "hardhat deploy --export-all contracts.json",
     "test": "hardhat test",
-    "test-f": "hardhat test --deploy-fixture",
+    "testf": "hardhat test --deploy-fixture",
     "verify": "hardhat etherscan-verify"
   },
   "_moduleAliases": {
@@ -34,9 +34,9 @@
     "ether": "^0.0.9",
     "ethereum-waffle": "^3.4.4",
     "ethers": "^5.5.3",
-    "hardhat": "^2.22.5",
+    "hardhat": "^2.17.0",
     "hardhat-deploy-tenderly": "^0.2.0",
-    "hardhat-gas-reporter": "^1.0.7",
+    "hardhat-gas-reporter": "^2.2.0",
     "js-yaml": "^4.1.0",
     "module-alias": "^2.2.2",
     "prettier": "^2.5.1",
