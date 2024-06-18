@@ -13,7 +13,7 @@ import "@openzeppelin/contracts/token/ERC20/ERC20.sol";
  */
 contract NftStaking is Ownable {
     struct Period {
-        uint safepoint; // timestamp strting ftom 0
+        uint safepoint; // timestamp strating from 0
         uint reward; // per current period
     }
 
