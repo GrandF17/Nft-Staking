@@ -1,11 +1,15 @@
 import { task } from "hardhat/config";
+
+import * as dotenv from "dotenv";
+dotenv.config();
+
 import "@nomiclabs/hardhat-waffle";
 import "@typechain/hardhat";
 import "hardhat-deploy";
 import 'hardhat-gas-reporter'
-import * as dotenv from "dotenv";
+
 import { HardhatUserConfig } from "hardhat/types/config";
-dotenv.config();
+import { gasReportConfig } from "./utils/gas.config";
 
 task("accounts", "Prints the list of accounts", async (taskArgs, hre) => {
   const accounts = await hre.ethers.getSigners();
@@ -33,14 +37,8 @@ const config: HardhatUserConfig = {
         },
       }]
   },
-  gasReporter: {
-    enabled: (process.env.REPORT_GAS) ? true : false,
-    currency: 'USD',
-    coinmarketcap: process.env.CMC_API_KEY,
-    token: 'ETH',
-    gasPriceApi: "https://api.arbiscan.io/api?module=proxy&action=eth_gasPrice",
-    L2: "arbitrum"
-  },
+  // default chain is L2 Arbitrum
+  gasReporter: gasReportConfig(process.env.TEST_CHAIN ?? 'arbitrum'),
   networks: {
     hardhat: {
       tags: ["fork"],

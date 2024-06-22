@@ -51,5 +51,17 @@ describe("Simmple test", function () {
 
       expect(1).to.equal(1);
     });
+
+    it("Mint 10 NFTs", async function () {
+      const [owner] = await ethers.getSigners();
+      const { nft } = await loadFixture(deployFixture);
+      const amountBfr = await nft.lastTokenId();
+      const amoutnToMint = 10;
+
+      for (let i = 0; i < amoutnToMint; i++)
+        await nft.connect(owner).mintNFT(owner.address, "");
+
+      expect(amountBfr.add(amoutnToMint)).to.equal(await nft.lastTokenId());
+    });
   });
 });
