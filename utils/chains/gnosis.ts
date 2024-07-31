@@ -4,6 +4,9 @@ export const gnosis: Chain = {
     name: 'gnosis',
     id: 100,
     token: 'xDAI',
+    rpc: "https://rpc.gnosis.gateway.fm",
+    type: "mainnet",
+    ////////////////////
     gasPriceApi: "https://blockscout.com/xdai/mainnet/api?module=proxy&action=eth_gasPrice",
     etherscan: process.env.GNOSIS_API_KEY as string,
     isL1: true,

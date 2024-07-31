@@ -7,9 +7,12 @@ import "@nomiclabs/hardhat-waffle";
 import "@typechain/hardhat";
 import "hardhat-deploy";
 import 'hardhat-gas-reporter'
-
 import { HardhatUserConfig } from "hardhat/types/config";
-import { gasReportConfig } from "./utils/gas.config";
+
+/// CUSTOM ///
+import { Map } from "@/utils/utils.types";
+import { gasReportConfig } from "@/utils/gas.config";
+import { chains } from "@/utils/chain.config";
 
 task("accounts", "Prints the list of accounts", async (taskArgs, hre) => {
   const accounts = await hre.ethers.getSigners();
@@ -17,6 +20,29 @@ task("accounts", "Prints the list of accounts", async (taskArgs, hre) => {
     console.log(account.address);
   }
 });
+
+export const networks = () => {
+  const networks = {} as Map<Object>
+
+  for (const name in chains) {
+    networks[name] = {
+      chainId: chains[name].id,
+      url: chains[name].rpc,
+      accounts: process.env.PRIVATE_MAIN
+        ? process.env.PRIVATE_MAIN?.split(",")
+        : [],
+      tags: [],
+      deploy: [`deploy/${chains[name].type}/`],
+      verify: {
+        etherscan: {
+          apiKey: chains[name].etherscan,
+        },
+      },
+    }
+  }
+
+  return networks
+}
 
 const config: HardhatUserConfig = {
   solidity: {
@@ -26,7 +52,7 @@ const config: HardhatUserConfig = {
         settings: {
           optimizer: {
             enabled: true,
-            runs: 200,
+            runs: 1000,
           },
           metadata: {
             // do not include the metadata hash, since this is machine dependent
@@ -37,53 +63,17 @@ const config: HardhatUserConfig = {
         },
       }]
   },
-  // default chain is L2 Arbitrum
+  // default chain is Arbitrum (L2)
   gasReporter: gasReportConfig(process.env.TEST_CHAIN ?? 'arbitrum'),
   networks: {
     hardhat: {
       tags: ["fork"],
       deploy: ["deploy/fork/"],
       forking: {
-        url: "https://rpc.ankr.com/arbitrum",
+        url: chains[process.env.TEST_CHAIN ?? 'arbitrum'].rpc,
       },
     },
-    bsc_mainnet: {
-      chainId: 56,
-      url: `https://bsc-dataseed1.binance.org/`,
-      accounts: process.env.PRIVATE_MAIN
-        ? process.env.PRIVATE_MAIN?.split(",")
-        : [],
-      tags: ["mainnet"],
-      deploy: [`deploy/mainnet/`],
-      verify: {
-        etherscan: {
-          apiKey: process.env.API_BSC,
-        },
-      },
-    },
-    bsc_testnet: {
-      chainId: 97,
-      url: "https://data-seed-prebsc-1-s1.binance.org:8545",
-      accounts: process.env.PRIVATE_TEST
-        ? process.env.PRIVATE_TEST?.split(",")
-        : [],
-      tags: ["testnet"],
-      deploy: [`deploy/testnet/`],
-      verify: {
-        etherscan: {
-          apiKey: process.env.API_BSC,
-        },
-      },
-    },
-    octa: {
-      chainId: 800001,
-      url: `https://rpc.octa.space`,
-      accounts: process.env.PRIVATE_MAIN
-        ? process.env.PRIVATE_MAIN?.split(",")
-        : [],
-      tags: ["mainnet"],
-      deploy: [`deploy/mainnet/`],
-    },
+    ...networks()
   },
 };
 

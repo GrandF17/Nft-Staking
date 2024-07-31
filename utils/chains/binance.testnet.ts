@@ -1,11 +1,11 @@
 import { Chain } from "../utils.types";
 
-export const binance: Chain = {
+export const binanceT: Chain = {
     name: 'binance',
-    id: 56,
+    id: 97,
     token: 'BNB',
-    rpc: "https://bsc-dataseed1.binance.org/",
-    type: "mainnet",
+    rpc: "https://data-seed-prebsc-1-s1.binance.org:8545/",
+    type: "testnet",
     ////////////////////
     gasPriceApi: "https://api.bscscan.com/api?module=proxy&action=eth_gasPrice",
     etherscan: process.env.BINANCE_API_KEY as string,

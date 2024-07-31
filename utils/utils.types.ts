@@ -6,6 +6,8 @@ export interface Chain {
     name: string;
     id: number;
     token: string;
+    rpc: string;
+    type: "mainnet" | "testnet" | "devnet";
     ////////////////////
     gasPriceApi: string;
     etherscan: string;
