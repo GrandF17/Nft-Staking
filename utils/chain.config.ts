@@ -11,7 +11,7 @@ import {
     moonriver,
     polygon,
     octa,
-    binanceT,
+    binance_test,
 } from "@/utils/chains/_chains.export";
 import { Chain, Map } from "@/utils/utils.types";
 
@@ -19,7 +19,7 @@ export const chains: Map<Chain> = {
     "arbitrum": arbitrum,
     "avalanche": avalanche,
     "base": base,
-    "binanceT": binanceT,
+    "binance_test": binance_test,
     "binance": binance,
     "ethereum": ethereum,
     "fantom": fantom,

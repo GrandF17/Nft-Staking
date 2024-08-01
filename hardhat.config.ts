@@ -6,7 +6,7 @@ dotenv.config();
 import "@nomiclabs/hardhat-waffle";
 import "@typechain/hardhat";
 import "hardhat-deploy";
-import 'hardhat-gas-reporter'
+import "hardhat-gas-reporter";
 import { HardhatUserConfig } from "hardhat/types/config";
 
 /// CUSTOM ///
@@ -22,15 +22,22 @@ task("accounts", "Prints the list of accounts", async (taskArgs, hre) => {
 });
 
 export const networks = () => {
-  const networks = {} as Map<Object>
+  const networks = {} as Map<Object>;
 
   for (const name in chains) {
+    const accounts =
+      chains[name].type == "testnet"
+        ? process.env.PRIVATE_TEST
+          ? process.env.PRIVATE_TEST?.split(",")
+          : []
+        : process.env.PRIVATE_MAIN
+          ? process.env.PRIVATE_MAIN?.split(",")
+          : [];
+
     networks[name] = {
       chainId: chains[name].id,
       url: chains[name].rpc,
-      accounts: process.env.PRIVATE_MAIN
-        ? process.env.PRIVATE_MAIN?.split(",")
-        : [],
+      accounts,
       tags: [],
       deploy: [`deploy/${chains[name].type}/`],
       verify: {
@@ -38,11 +45,13 @@ export const networks = () => {
           apiKey: chains[name].etherscan,
         },
       },
-    }
+    };
   }
 
-  return networks
-}
+
+
+  return networks;
+};
 
 const config: HardhatUserConfig = {
   solidity: {
@@ -61,19 +70,20 @@ const config: HardhatUserConfig = {
             // bytecodeHash: "none",
           },
         },
-      }]
+      },
+    ],
   },
   // default chain is Arbitrum (L2)
-  gasReporter: gasReportConfig(process.env.TEST_CHAIN ?? 'arbitrum'),
+  gasReporter: gasReportConfig(process.env.TEST_CHAIN ?? "arbitrum"),
   networks: {
     hardhat: {
       tags: ["fork"],
       deploy: ["deploy/fork/"],
       forking: {
-        url: chains[process.env.TEST_CHAIN ?? 'arbitrum'].rpc,
+        url: chains[process.env.TEST_CHAIN ?? "arbitrum"].rpc,
       },
     },
-    ...networks()
+    ...networks(),
   },
 };
 

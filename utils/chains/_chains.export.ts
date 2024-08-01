@@ -13,14 +13,14 @@ import { polygon } from "./polygon";
 import { octa } from "./octa";
 
 /// TESTNETS ///
-import { binanceT } from "./binance.testnet";
+import { binance_test } from "./binance.testnet";
 
 export {
     arbitrum,
     avalanche,
     base,
     binance,
-    binanceT,
+    binance_test,
     ethereum,
     fantom,
     gnosis,

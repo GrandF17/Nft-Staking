@@ -1,6 +1,6 @@
 import { Chain } from "../utils.types";
 
-export const binanceT: Chain = {
+export const binance_test: Chain = {
     name: 'binance',
     id: 97,
     token: 'BNB',
